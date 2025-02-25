@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>血壓追蹤器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>血壓追蹤器</h1>
+        <form id="bp-form">
+            <label for="systolic">收縮壓 (mm Hg):</label>
+            <input type="number" id="systolic" name="systolic" required>
+            <label for="diastolic">舒張壓 (mm Hg):</label>
+            <input type="number" id="diastolic" name="diastolic" required>
+            <button type="submit">新增紀錄</button>
+        </form>
+        <div id="records">
+            <h2>紀錄</h2>
+            <ul id="record-list"></ul>
+        </div>
+        <div id="bp-table">
+            <h2>血壓分類</h2>
+            <table>
+                <tr>
+                    <th>分類</th>
+                    <th>收縮壓 (mm Hg)</th>
+                    <th>舒張壓 (mm Hg)</th>
+                </tr>
+                <tr>
+                    <td>正常血壓</td>
+                    <td><120</td>
+                    <td><80</td>
+                </tr>
+                <tr>
+                    <td>高血壓前期</td>
+                    <td>120-139</td>
+                    <td>80-89</td>
+                </tr>
+                <tr>
+                    <td>高血壓第1期</td>
+                    <td>140-159</td>
+                    <td>90-99</td>
+                </tr>
+                <tr>
+                    <td>高血壓第2期</td>
+                    <td>160-179</td>
+                    <td>100-109</td>
+                </tr>                Add initial HTML structure for blood pressure tracker with form and classification table                Add initial HTML structure for blood pressure tracker with form and classification table                Add initial HTML structure for blood pressure tracker with form and classification table
+                <tr>
+                    <td>低血壓</td>
+                    <td><90</td>
+                    <td><60</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
