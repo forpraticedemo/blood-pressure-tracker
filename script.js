@@ -21,6 +21,11 @@ document.getElementById('bp-form').addEventListener('submit', function(event) {
     }
     listItem.textContent += ` - ${category}`;
     
+    // Add current date and time
+    const now = new Date();
+    const dateTime = now.toLocaleString();
+    listItem.textContent += ` - ${dateTime}`;
+    
     recordList.appendChild(listItem);
     
     document.getElementById('bp-form').reset();
