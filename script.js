@@ -1,32 +1,47 @@
-document.getElementById('bp-form').addEventListener('submit', function(event) {
+document.addEventListener('DOMContentLoaded', function() {
+  fetchData();
+
+  document.getElementById('dataForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    
-    const systolic = document.getElementById('systolic').value;
-    const diastolic = document.getElementById('diastolic').value;
-    
-    const recordList = document.getElementById('record-list');
-    const listItem = document.createElement('li');
-    listItem.textContent = `收縮壓: ${systolic} mm Hg, 舒張壓: ${diastolic} mm Hg`;
-    
-    // Add blood pressure category
-    let category = '';
-    if (systolic < 120 && diastolic < 80) {
-        category = '正常血壓';
-    } else if (systolic >= 120 && systolic <= 139 || diastolic >= 80 && diastolic <= 89) {
-        category = '高血壓前期';
-    } else if (systolic >= 140 && systolic <= 159 || diastolic >= 90 && diastolic <= 99) {
-        category = '高血壓第1期';
-    } else if (systolic >= 160 && systolic <= 179 || diastolic >= 100 && diastolic <= 109) {
-        category = '高血壓第2期';
-    }
-    listItem.textContent += ` - ${category}`;
-    
-    // Add current date and time
-    const now = new Date();
-    const dateTime = now.toLocaleString();
-    listItem.textContent += ` - ${dateTime}`;
-    
-    recordList.appendChild(listItem);
-    
-    document.getElementById('bp-form').reset();
+    addData();
+  });
 });
+
+function fetchData() {
+  fetch(YOUR_WEB_APP_URL, { mode: 'no-cors' })
+    .then(response => response.json())
+    .then(data => {
+      var dataDiv = document.getElementById('data');
+      dataDiv.innerHTML = '';
+      data.forEach(item => {
+        dataDiv.innerHTML += `<p>收縮壓: ${item.收縮壓}, 舒張壓: ${item.舒張壓}, 心率: ${item.心率}, 時間: ${item.時間}</p>`;
+      });
+    });
+}
+
+function addData() {
+  var systolic = document.getElementById('systolic').value;
+  var diastolic = document.getElementById('diastolic').value;
+  var heartRate = document.getElementById('heartRate').value;
+  var timestamp = document.getElementById('timestamp').value;
+
+  fetch(YOUR_WEB_APP_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      收縮壓: systolic,
+      舒張壓: diastolic,
+      心率: heartRate,
+      時間: timestamp
+    }),
+    mode: 'no-cors'
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      fetchData();
+    }
+  });
+}
