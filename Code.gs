@@ -2,7 +2,15 @@ function doPost(e) {
   var sheetId = e.parameter.sheetId || "1kVXne88AUwc_ovhd5iByRgNG0PqgNzaD1YjHL4xrm6A";
   var sheetName = e.parameter.sheetName || "wolkesau@gmail.com";
   var data = JSON.parse(e.postData.contents);
-  return ContentService.createTextOutput(addBloodPressureData(sheetId, sheetName, data)).setMimeType(ContentService.MimeType.JSON).setHeader("Access-Control-Allow-Origin", "*");
+  
+  var output = ContentService.createTextOutput(JSON.stringify({
+    result: addBloodPressureData(sheetId, sheetName, data)
+  })).setMimeType(ContentService.MimeType.JSON);
+  
+  // 設置 CORS headers
+  return HtmlService.createHtmlOutput()
+    .setContent(output.getContent())
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
 function addBloodPressureData(sheetId, sheetName, data) {
@@ -14,7 +22,15 @@ function addBloodPressureData(sheetId, sheetName, data) {
 function doGet(e) {
   var sheetId = e.parameter.sheetId || "1kVXne88AUwc_ovhd5iByRgNG0PqgNzaD1YjHL4xrm6A";
   var sheetName = e.parameter.sheetName || "wolkesau@gmail.com";
-  return ContentService.createTextOutput(getBloodPressureData(sheetId, sheetName)).setMimeType(ContentService.MimeType.JSON).setHeader("Access-Control-Allow-Origin", "*");
+
+  var bloodPressureData = getBloodPressureData(sheetId, sheetName);
+  
+  return ContentService.createTextOutput(JSON.stringify({
+    status: 200,
+    message: '成功',
+    data: bloodPressureData
+  }))
+  .setMimeType(ContentService.MimeType.JSON);
 }
 
 function getBloodPressureData(sheetId, sheetName) {
@@ -32,5 +48,7 @@ function getBloodPressureData(sheetId, sheetName) {
     });
   }
 
-  return JSON.stringify(result);
+  return result;
 }
+
+

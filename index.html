@@ -1,24 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-  <title>Blood Pressure Tracker</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>血壓追蹤器</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Blood Pressure Tracker</h1>
-  <div id="data"></div>
-  <form id="dataForm">
-    <label for="systolic">收縮壓:</label>
-    <input type="number" id="systolic" name="systolic" required><br>
-    <label for="diastolic">舒張壓:</label>
-    <input type="number" id="diastolic" name="diastolic" required><br>
-    <label for="heartRate">心率:</label>
-    <input type="number" id="heartRate" name="heartRate" required><br>
-    <label for="timestamp">時間:</label>
-    <input type="number" id="timestamp" name="timestamp" required><br>
-    <button type="submit">新增資料</button>
-  </form>
-  <script src="const.js" type="module"></script>
-  <script src="script.js" type="module"></script>
+    <div class="container">
+        <header>
+            <h1>血壓追蹤器</h1>
+        </header>
+        
+        <main>
+            <section class="data-input">
+                <h2>新增資料</h2>
+                <form id="bp-form">
+                    <div class="form-group">
+                        <label for="systolic">收縮壓 (mmHg)</label>
+                        <input type="number" id="systolic" min="60" max="250" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diastolic">舒張壓 (mmHg)</label>
+                        <input type="number" id="diastolic" min="40" max="150" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="heartRate">心率 (bpm)</label>
+                        <input type="number" id="heartRate" min="40" max="200" required>
+                    </div>
+                    <button type="submit">儲存</button>
+                </form>
+            </section>
+            
+            <section class="data-display">
+                <h2>血壓歷史紀錄</h2>
+                <div class="filter-controls">
+                    <button id="refresh-data">重新整理</button>
+                </div>
+                <div class="table-container">
+                    <table id="bp-table">
+                        <thead>
+                            <tr>
+                                <th>收縮壓</th>
+                                <th>舒張壓</th>
+                                <th>心率</th>
+                                <th>日期時間</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bp-data">
+                            <!-- 資料將由 JavaScript 動態填入 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="loading">載入中...</div>
+                <div id="error-message"></div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>血壓追蹤器 &copy; 2023</p>
+        </footer>
+    </div>
+    
+    <script src="const.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
